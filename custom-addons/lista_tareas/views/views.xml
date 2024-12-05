@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="lista_tareas.list">
+      <field name="name">lista_tareas list</field>
+      <field name="model">lista_tareas.lista_tareas</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="tarea" />
+          <field name="prioridad" />
+          <field name="urgente" />
+          <field name="realizada" />
+        </tree>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="lista_tareas.action_window">
+      <field name="name">Listado de tareas pendientes</field>
+      <field name="res_model">lista_tareas.lista_tareas</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Listado de tareas" id="lista_tareas.menu_root"/>
+    <menuitem name="Opciones Lista Tareas" id="lista_tareas.menu_1" parent="lista_tareas.menu_root"/>
+    <menuitem name="Mostrar lista" id="lista_tareas.menu_1_list" parent="lista_tareas.menu_1" action="lista_tareas.action_window"/>
+  </data>
+</odoo>
