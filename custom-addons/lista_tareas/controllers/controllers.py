@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from odoo import http
+from odoo.http import request
+import json
 
 
 class ListaTareas(http.Controller):
     @http.route('/lista_tareas/lista_tareas', auth='public')
     def index(self, **kw):
-        print("Hola Mundo, DAM2")
+        return "Hola soy Fabio"
 
     @http.route('/lista_tareas/lista_tareas/objects', auth='public')
     def list(self, **kw):
@@ -19,21 +21,18 @@ class ListaTareas(http.Controller):
         return http.request.render('lista_tareas.object', {
             'object': obj
         })
-    @http.route('/lista_tareas/lista_tareas/listado', type='http', auth='public', methods=['GET'])
-    def listado_tareas(self, **kw):
-        tareas = request.env[('lista_tareas.lista_tareas')].search([])
-        tareas_list = []
+
+    @http.route('/lista_tareas/lista_tareas/listado', auth='public', csrf=False, type='http', methods=['GET'])
+    def liston(self, **kw):
+        tareas = request.env['lista_tareas.lista_tareas'].search([])
+
+        lista_tareas = []
         for tarea in tareas:
-            tareas_list.append({
+            lista_tareas.append({
                 'id': tarea.id,
                 'tarea': tarea.tarea,
                 'prioridad': tarea.prioridad,
                 'urgente': tarea.urgente,
                 'realizada': tarea.realizada,
             })
-
-        return request.make_response(
-            json.dumps(tareas_list),
-            header={'Content-Type': 'application/json'}
-        )
-
+        return request.make_response(json.dumps(lista_tareas), headers={'Content-Type': 'application/json'})
