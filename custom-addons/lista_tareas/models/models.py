@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api
+from odoo.addons.test_impex.models import field
+from odoo.tools.populate import compute
 
 
 class lista_tareas(models.Model):
@@ -7,8 +11,9 @@ class lista_tareas(models.Model):
 
     tarea = fields.Char()
     prioridad = fields.Integer()
-    urgente = fields.Boolean(compute="_value_urgente", store=True)
+    urgente = fields.Boolean(compute="_value_urgente", store= True)
     realizada = fields.Boolean()
+    fecha_tarea = fields.Datetime(string="Fecha de Tarea")
 
     @api.depends('prioridad')
     def _value_urgente(self):
@@ -17,4 +22,3 @@ class lista_tareas(models.Model):
                 record.urgente = True
             else:
                 record.urgente = False
-
